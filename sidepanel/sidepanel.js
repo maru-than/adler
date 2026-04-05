@@ -122,11 +122,15 @@ async function sendMessage() {
     }
   });
 
-  // Build API messages (strip displayContent)
-  const apiMessages = messages.map((m) => ({
-    role: m.role,
-    content: m.content,
-  }));
+  // Build API messages with system prompt
+  const systemPrompt = {
+    role: 'system',
+    content: 'Be direct and concise. Short answers, no filler. Use plain language. Skip greetings, disclaimers, and repetition. If the user shares page context, reference it naturally without restating it.',
+  };
+  const apiMessages = [
+    systemPrompt,
+    ...messages.map((m) => ({ role: m.role, content: m.content })),
+  ];
 
   port.postMessage({
     type: 'CHAT_REQUEST',
@@ -166,11 +170,9 @@ function renderMessage(msg, animate) {
   el.className = `message ${msg.role}`;
   if (!animate) el.style.animation = 'none';
 
-  const roleLabel = msg.role === 'user' ? 'You' : getProviderLabel();
   const displayText = msg.displayContent || msg.content;
 
   el.innerHTML = `
-    <div class="message-role">${roleLabel}</div>
     <div class="message-content">${msg.role === 'assistant' ? renderMarkdown(displayText) : escapeHtml(displayText)}</div>
   `;
 
@@ -183,7 +185,6 @@ function createAssistantBubble() {
   const el = document.createElement('div');
   el.className = 'message assistant';
   el.innerHTML = `
-    <div class="message-role">${getProviderLabel()}</div>
     <div class="message-content">
       <div class="typing-indicator"><span></span><span></span><span></span></div>
     </div>
@@ -202,12 +203,6 @@ function updateAssistantBubble(el, text) {
 function finishStreaming(el, text) {
   updateAssistantBubble(el, text);
   setStreaming(false);
-}
-
-function getProviderLabel() {
-  const [provider] = modelSelector.value.split(':');
-  const labels = { openai: 'ChatGPT', anthropic: 'Claude', gemini: 'Gemini' };
-  return labels[provider] || 'AI';
 }
 
 function escapeHtml(text) {
