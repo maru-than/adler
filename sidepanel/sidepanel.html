@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adler</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <span class="logo">Adler</span>
+        <select id="model-selector" class="model-selector">
+          <optgroup label="OpenAI" data-provider="openai">
+            <option value="openai:gpt-4o">GPT-4o</option>
+            <option value="openai:gpt-4o-mini">GPT-4o Mini</option>
+            <option value="openai:gpt-4.1">GPT-4.1</option>
+            <option value="openai:gpt-4.1-mini">GPT-4.1 Mini</option>
+          </optgroup>
+          <optgroup label="Claude" data-provider="anthropic">
+            <option value="anthropic:claude-sonnet-4-5-20250514">Claude Sonnet 4.5</option>
+            <option value="anthropic:claude-haiku-4-5-20250514">Claude Haiku 4.5</option>
+          </optgroup>
+          <optgroup label="Gemini" data-provider="gemini">
+            <option value="gemini:gemini-2.5-flash">Gemini 2.5 Flash</option>
+            <option value="gemini:gemini-2.5-pro">Gemini 2.5 Pro</option>
+            <option value="gemini:gemini-2.0-flash">Gemini 2.0 Flash</option>
+          </optgroup>
+        </select>
+      </div>
+      <button id="btn-settings" class="icon-btn" title="Settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Chat messages -->
+    <div id="chat-messages" class="chat-messages">
+      <div class="empty-state">
+        <div class="empty-icon">A</div>
+        <p>Select a model and start chatting.</p>
+      </div>
+    </div>
+
+    <!-- Error banner -->
+    <div id="error-banner" class="error-banner hidden">
+      <span id="error-text"></span>
+      <button id="error-dismiss" class="error-dismiss">&times;</button>
+    </div>
+
+    <!-- Input area -->
+    <div class="input-area">
+      <div class="input-row">
+        <textarea id="message-input" class="message-input" placeholder="Type a message..." rows="1"></textarea>
+        <button id="btn-send" class="send-btn" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+        <button id="btn-stop" class="stop-btn hidden" title="Stop generating">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="4" y="4" width="16" height="16" rx="2"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="sidepanel.js"></script>
+</body>
+</html>
